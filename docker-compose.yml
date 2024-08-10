@@ -1,0 +1,15 @@
+services:
+  mssql:
+    image: ardonplay/lightest-mssql-pancake
+    container_name: "lightest-mssql-pancake"
+    build:
+      context: ./mssql
+    hostname: lightest-mssql-pancake
+    restart: always
+    environment:
+      SA_PASSWORD: R00tIkr@
+      ACCEPT_EULA: "Y"
+      TZ: "Europe/Minsk"
+      MSSQL_PID: Developer
+    ports:
+      - 1433:1433
