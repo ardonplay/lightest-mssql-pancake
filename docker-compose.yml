@@ -3,7 +3,7 @@ services:
     image: ardonplay/lightest-mssql-pancake
     container_name: "lightest-mssql-pancake"
     build:
-      context: ./mssql
+      context: ./src
     hostname: lightest-mssql-pancake
     restart: always
     environment:

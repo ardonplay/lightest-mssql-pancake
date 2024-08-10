@@ -58,7 +58,11 @@ down)
     shift 1;
     docker compose down
     ;;
-
+drop)
+    shift 1;
+    database_name=$1
+    docker exec -it lightest-mssql-pancake drop ${database_name}
+    ;;
 restore)
     shift 1;
 
@@ -66,11 +70,9 @@ restore)
     db_name=$2
     file_name=$(basename "$bak_file")
 
-    echo "$file_name"
-    echo "$db_name"
     docker cp "$bak_file" "lightest-mssql-pancake:/var/backups/"
     docker exec -it --user root lightest-mssql-pancake  chmod 755 /var/backups/${file_name}
-    docker exec -it lightest-mssql-pancake sqlcmd -S localhost -U SA -P R00tIkr@ -C  -Q "RESTORE DATABASE [${db_name}] FROM  DISK = N'/var/backups/${file_name}' WITH  FILE = 1,  MOVE N'${db_name}' TO N'/var/opt/mssql/data/${file_name}',  MOVE N'${db_name}_log' TO N'/var/opt/mssql/data/${db_name}_log.ldf',  NOUNLOAD,  STATS = 5"
+    docker exec -it lightest-mssql-pancake restore /var/backups/${file_name}
     
     ;;
 
