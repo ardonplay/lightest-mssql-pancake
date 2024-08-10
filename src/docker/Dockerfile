@@ -14,7 +14,7 @@ RUN ACCEPT_EULA=Y apt-get install -y mssql-tools18 unixodbc-dev
 ENV PATH="/opt/mssql-tools18/bin:$PATH"
 RUN chown mssql:root /var/backups/
 
-COPY ./scripts ./var/scripts
+COPY ../scripts ./var/scripts
 ENV PATH="/var/scripts/bin:$PATH"
 
 USER mssql

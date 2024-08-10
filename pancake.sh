@@ -42,21 +42,21 @@ run)
 
     if [[ $DETACHED ]]; then
         echo "STARTING..."
-        docker compose up -d
+        docker compose -f ./src/docker/docker-compose.yml up -d
     else 
-        docker compose up
+        docker compose -f ./src/docker/docker-compose.yml up
     fi
     ;;
 
 # stop db
 stop)
     shift 1;
-    docker compose stop
+    docker compose -f ./src/docker/docker-compose.yml stop
     ;;
 
 down)
     shift 1;
-    docker compose down
+    docker compose -f ./src/docker/docker-compose.yml down
     ;;
 drop)
     shift 1;
