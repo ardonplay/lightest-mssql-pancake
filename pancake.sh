@@ -8,10 +8,11 @@ Usage:
 
 Commands:
     run          Run db
-    stop 	     Stop db
+    stop 	 Stop db
     down         Delete all server
     drop         Drop database by name
     restore      Restore database from .bak file
+    build        Build new image from src
 Description:
     pancake - script for managing mssql server.
 
@@ -20,7 +21,7 @@ USAGE
 }
 
 
-
+PROJECT_DIR=$(dirname "$(realpath "$0")")
 
 # ==============================================
 # COMMAND SWITCHER
@@ -42,21 +43,21 @@ run)
 
     if [[ $DETACHED ]]; then
         echo "STARTING..."
-        docker compose -f ./src/docker/docker-compose.yml up -d
+        docker compose -f  ${PROJECT_DIR}/src/docker/docker-compose.yml up -d
     else 
-        docker compose -f ./src/docker/docker-compose.yml up
+        docker compose -f  ${PROJECT_DIR}/src/docker/docker-compose.yml up
     fi
     ;;
 
 # stop db
 stop)
     shift 1;
-    docker compose -f ./src/docker/docker-compose.yml stop
+    docker compose -f  ${PROJECT_DIR}/src/docker/docker-compose.yml stop
     ;;
 
 down)
     shift 1;
-    docker compose -f ./src/docker/docker-compose.yml down
+    docker compose -f ${PROJECT_DIR}/src/docker/docker-compose.yml down
     ;;
 drop)
     shift 1;
@@ -76,7 +77,10 @@ restore)
     
     ;;
 
-
+build)
+    shift 1;
+    docker compose -f ${PROJECT_DIR}/src/docker/docker-compose.yml build
+    ;;
 # show help
 --help)
     usage

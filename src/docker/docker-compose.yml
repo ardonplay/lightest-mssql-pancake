@@ -2,15 +2,22 @@ services:
   mssql:
     image: ardonplay/lightest-mssql-pancake:latest
     container_name: "lightest-mssql-pancake"
-    build:
-      context: .
     hostname: lightest-mssql-pancake
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
     restart: on-failure
     environment:
       SA_PASSWORD: R00tIkr@
       ACCEPT_EULA: "Y"
       TZ: "Europe/Minsk"
       MSSQL_PID: Developer
+    healthcheck:
+      test: sqlcmd -U sa -P "$${SA_PASSWORD}" -C -Q "SELECT 1" -b -o /dev/null
+      start_period: 10s
+      timeout: 2s
+      interval: 30s
+      retries: 3
     volumes:
       - lightest-mssql-pancake-data:/var/opt/mssql
     ports:
