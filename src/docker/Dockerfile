@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/mssql/server:2019-latest
+FROM mcr.microsoft.com/azure-sql-edge
 
 USER root
 ENV PIP_ROOT_USER_ACTION=ignore
